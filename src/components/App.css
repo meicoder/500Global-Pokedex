@@ -1,0 +1,14 @@
+body {
+    background-color: #dbf6e9;
+    color: #162447;
+}
+
+.App {
+    padding-top: 130px;
+    min-height: 100vh;
+    font-family: sans-serif;
+}
+
+nav {
+    font-family: 'Pokemon Solid', sans-serif;
+}
