@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { PokemonItem } from './PokemonItem';
 import axios from 'axios';
-import { PokemonItemInList } from '../../types/PokemonSchema';
+import { PokemonItemInList, Type } from '../../types/PokemonSchema';
 import { Navigation } from '../layout/Navigation';
 import { pokemonData } from '../../data/PokemonData';
 import { SearchBox } from '../layout/SearchBox';
@@ -18,6 +18,7 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
     const [pokemonsInCache, setpokemonsInCache] = useState<PokemonItemInList[]>(
         []
     );
+    const [types, setTypes] = useState<Type[]>([]);
 
     useEffect(() => {
         const getPokemons = async () => {
@@ -31,6 +32,11 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
 
     useEffect(() => {
         setpokemonsInCache(pokemonData);
+        const getTypes = async () => {
+            const response = await axios('https://pokeapi.co/api/v2/type');
+            setTypes(response.data.results);
+        };
+        getTypes();
     }, []);
 
     const handleInputChange = (inputValue: string) => {
@@ -52,7 +58,10 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
             {pokemons ? (
                 <div className="row">
                     <div className="row">
-                        <SearchBox onInputChange={handleInputChange} />
+                        <SearchBox
+                            onInputChange={handleInputChange}
+                            types={types}
+                        />
                     </div>
                     <div className="row">
                         {pokemons.map((pokemon: PokemonItemInList) => {

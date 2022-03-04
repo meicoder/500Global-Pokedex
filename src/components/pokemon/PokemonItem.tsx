@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { FaStar, FaRegStar } from 'react-icons/fa';
 
 const NameStyled = styled.h5`
     font-size: 18px;
@@ -47,17 +48,19 @@ export const PokemonItem = (props: PokemonItemProps) => {
         const pokemonUrlArray = url.split('/');
         const pokemonIndex = pokemonUrlArray[pokemonUrlArray.length - 2];
         const imageUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`;
-        setPokemon({
-            ...pokemon,
-            imageUrl,
-            pokemonIndex
+        setPokemon((prevState: IPokemonItem) => {
+            return {
+                name: prevState.name,
+                imageUrl,
+                pokemonIndex
+            };
         });
         const saved = localStorage.getItem('fav');
         saved && setFavs(JSON.parse(saved));
-    }, []);
+    }, [url]);
 
     const updateLocalStorage = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        e: React.MouseEvent<SVGElement, MouseEvent>,
         pokemonId: string
     ) => {
         e.preventDefault();
@@ -85,16 +88,31 @@ export const PokemonItem = (props: PokemonItemProps) => {
                         <h3>{pokemon.pokemonIndex}</h3>
                     </div>
                     <div>
-                        <button
-                            onClick={(e) => {
-                                updateLocalStorage(e, pokemon.pokemonIndex);
-                            }}
-                            className="btn btn-primary"
-                        >
-                            {favs.includes(pokemon.pokemonIndex)
-                                ? 'UnFav'
-                                : 'Fav'}
-                        </button>
+                        {favs.includes(pokemon.pokemonIndex) ? (
+                            <h2>
+                                <FaStar
+                                    style={{ color: 'red' }}
+                                    onClick={(e) => {
+                                        updateLocalStorage(
+                                            e,
+                                            pokemon.pokemonIndex
+                                        );
+                                    }}
+                                />
+                            </h2>
+                        ) : (
+                            <h2>
+                                <FaRegStar
+                                    style={{ color: 'red' }}
+                                    onClick={(e) => {
+                                        updateLocalStorage(
+                                            e,
+                                            pokemon.pokemonIndex
+                                        );
+                                    }}
+                                />
+                            </h2>
+                        )}
                     </div>
                 </CardHeaderStyled>
                 <div

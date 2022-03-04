@@ -23,7 +23,7 @@ export const PokemonCard = ({ pokemonId }: PokemonCardProps) => {
     const [pokemon, setPokemon] = useState<PokemonSchema | undefined>(
         undefined
     );
-    const [pokemonTypes, setPokemonTypes] = useState<String[]>([]);
+    const [pokemonTypes, setPokemonTypes] = useState<string[]>([]);
     const [pokemonVersions, setPokemonVersions] = useState<string[]>([]);
     useEffect(() => {
         const getPokemon = async (pokemonId: string) => {
@@ -60,13 +60,31 @@ export const PokemonCard = ({ pokemonId }: PokemonCardProps) => {
                     />
 
                     <div className="card-body">
-                        <p>Type: {pokemonTypes.join(',')}</p>
-                        <p>Versions:</p>
-                        <ul>
-                            {pokemonVersions.map((version: string) => {
-                                return <li key={version}> {version}</li>;
+                        <div className="d-flex">
+                            <span>Type:</span>
+                            {pokemonTypes.map((type: string) => {
+                                return (
+                                    <span
+                                        key={type}
+                                        className="badge rounded-pill bg-primary m-1"
+                                    >
+                                        {type}
+                                    </span>
+                                );
                             })}
-                        </ul>
+                        </div>
+
+                        <p>Versions:</p>
+                        {pokemonVersions.map((version: string) => {
+                            return (
+                                <span
+                                    key={version}
+                                    className="badge rounded-pill bg-primary m-1"
+                                >
+                                    {version}
+                                </span>
+                            );
+                        })}
                     </div>
                 </div>
             ) : (

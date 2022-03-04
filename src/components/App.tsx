@@ -1,10 +1,3 @@
-import { useEffect, useState } from 'react';
-import { pokemonData } from '../data/PokemonData';
-import {
-    PokemonImage,
-    PokemonSchema,
-    UnpatchedPokemonSchema
-} from '../types/PokemonSchema';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { NavBar } from './layout/NavBar';

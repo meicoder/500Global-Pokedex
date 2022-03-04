@@ -31,7 +31,7 @@ export const Content = () => {
                 <ColStyled className="col-md-7 ">
                     <PokemonList onCardClick={handleClick} />
                 </ColStyled>
-                <ColStyled className="col-md-5 ">
+                <ColStyled className="col-md-5">
                     <PokemonCard pokemonId={pokemonSelectedId} />
                 </ColStyled>
             </RowStyled>
