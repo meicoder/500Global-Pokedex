@@ -18,7 +18,8 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
     const [pokemonsInCache, setpokemonsInCache] = useState<PokemonItemInList[]>(
         []
     );
-    const [types, setTypes] = useState<Type[]>([]);
+
+    const [typeSelected, setTypeSelected] = useState<string>('');
 
     useEffect(() => {
         const getPokemons = async () => {
@@ -32,12 +33,26 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
 
     useEffect(() => {
         setpokemonsInCache(pokemonData);
-        const getTypes = async () => {
-            const response = await axios('https://pokeapi.co/api/v2/type');
-            setTypes(response.data.results);
-        };
-        getTypes();
     }, []);
+
+    useEffect(() => {
+        const getPokemons = async () => {
+            if (typeSelected) {
+                const response = await axios(
+                    `https://pokeapi.co/api/v2/type/${typeSelected}`
+                );
+                const newPokemons: PokemonItemInList[] = [];
+                const responsePokemons = response.data.pokemon.slice(0, 20);
+                responsePokemons.forEach(
+                    (pokemon: { pokemon: PokemonItemInList; slot: number }) => {
+                        newPokemons.push(pokemon.pokemon);
+                    }
+                );
+                setPokemons(newPokemons);
+            }
+        };
+        getPokemons();
+    }, [typeSelected]);
 
     const handleInputChange = (inputValue: string) => {
         const searchedPokemons = pokemonsInCache
@@ -60,7 +75,7 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
                     <div className="row">
                         <SearchBox
                             onInputChange={handleInputChange}
-                            types={types}
+                            setTypeSelected={setTypeSelected}
                         />
                     </div>
                     <div className="row">
@@ -79,7 +94,7 @@ export const PokemonList = ({ onCardClick }: PokemonListProps) => {
                     </div>
                 </div>
             ) : (
-                <h2>Cargando</h2>
+                <h2>Loading...</h2>
             )}
             <Navigation
                 nextPage={nextPage}

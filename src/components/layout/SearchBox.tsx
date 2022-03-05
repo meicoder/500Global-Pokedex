@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Type } from '../../types/PokemonSchema';
+import axios from 'axios';
 
 const StyledInput = styled.input`
     border: none;
@@ -21,13 +23,25 @@ const StyledSelect = styled.select`
 
 interface SearchBoxProps {
     onInputChange: (inputValue: string) => void;
-    types: Type[];
+    setTypeSelected: (typeSelected: string) => void;
 }
 
-export const SearchBox = ({ onInputChange, types }: SearchBoxProps) => {
+export const SearchBox = ({
+    onInputChange,
+    setTypeSelected
+}: SearchBoxProps) => {
+    const [types, setTypes] = useState<Type[]>([]);
     const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        console.log(e.target.value);
+        setTypeSelected(e.target.value);
     };
+
+    useEffect(() => {
+        const getTypes = async () => {
+            const response = await axios('https://pokeapi.co/api/v2/type');
+            setTypes(response.data.results);
+        };
+        getTypes();
+    }, []);
     return (
         <>
             <StyledInput
