@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests Navigation component should render the component 1`] = `
+<nav>
+  <ul
+    className="pagination justify-content-end"
+  />
+</nav>
+`;

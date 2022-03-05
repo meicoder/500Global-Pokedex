@@ -4,9 +4,10 @@ import { NavBar } from './layout/NavBar';
 import { Content } from './layout/Content';
 
 export const App = (): JSX.Element => {
+    const title = 'Pokemon';
     return (
         <div className="App">
-            <NavBar />
+            <NavBar title={title} />
             <div className="container">
                 <Content />
             </div>

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests Content component should render the component 1`] = `
+<Fragment>
+  <styled.div
+    className="row"
+  >
+    <styled.div
+      className="col-md-7 "
+    >
+      <PokemonList
+        onCardClick={[Function]}
+      />
+    </styled.div>
+    <styled.div
+      className="col-md-5"
+    >
+      <PokemonCard />
+    </styled.div>
+  </styled.div>
+</Fragment>
+`;
